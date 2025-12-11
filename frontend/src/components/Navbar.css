@@ -1,7 +1,7 @@
 /* Navbar container */
 .navbar {
   width: 100%;
-  padding: 14px 74px;
+  padding: 14px 350px;
   background-color: #0d1117; /* Dark GitHub background */
   color: white;
   display: flex;
@@ -15,22 +15,25 @@
 .nav-left {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 1px;
   text-decoration: none;
   color: white;
+  margin-right: 100px;
+  margin-left: 20px;
 }
 
 .nav-left h2 {
   font-size: 20px;
   margin: 0;
   font-weight: 600;
+  
 }
 
 /* RIGHT — Menu */
 .nav-right {
   display: flex;
   align-items: center;
-  gap: 26px;
+  gap: 27px;
 }
 
 /* Individual menu items */

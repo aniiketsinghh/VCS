@@ -24,7 +24,11 @@ const Profile = () => {
       if (userId) {
         try {
           const response = await axios.get(
-            `http://localhost:3002/userProfile/${userId}`
+            `http://localhost:3002/api/user/userProfile`,{
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            }
           );
           setUserDetails(response.data);
         } catch (err) {
