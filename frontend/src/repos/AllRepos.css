@@ -1,0 +1,53 @@
+/* Outer wrapper — full width, centered content */
+#all-repos-container {
+  width: 100%;
+  padding: 30px 60px;
+  background-color: #0d1117; /* Dark GitHub */
+  min-height: 100vh;
+  color: #c9d1d9;
+  font-family: "Inter", sans-serif;
+}
+
+/* Page title */
+#all-repos-container h1 {
+  margin: 0 0 25px 0;
+  font-size: 28px;
+  color: #f0f6fc;
+}
+
+/* List layout */
+.repos-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+}
+
+/* Repo card */
+.repo-card {
+  width: 100%;
+  padding: 18px 20px;
+  border-radius: 6px;
+  background: #161b22;
+  border: 1px solid #30363d;
+  transition: 0.18s ease;
+}
+
+.repo-card:hover {
+  background: #1a1f24;
+  border-color: #58a6ff;
+}
+
+/* Repo name */
+.repo-card h2 {
+  margin: 0;
+  font-size: 20px;
+  color: #58a6ff;
+}
+
+/* Repo description */
+.repo-card p {
+  margin: 6px 0 0;
+  font-size: 15px;
+  color: #8b949e;
+}

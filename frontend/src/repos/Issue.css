@@ -1,0 +1,90 @@
+/* Main Wrapper */
+#issues-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  background: #0d1117; /* GitHub Dark */
+  color: #e6edf3;
+  padding: 30px 60px;
+  box-sizing: border-box;
+}
+
+/* Page Title */
+.issues-header h2 {
+  font-size: 25px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #30363d;
+  padding-bottom: 12px;
+}
+
+/* Issues List */
+.issues-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Each Issue Card */
+.issue-card {
+  background: #161b22;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #30363d;
+  transition: 0.2s ease;
+}
+
+.issue-card:hover {
+  border-color: #8b949e;
+  background: #1d232b;
+}
+
+/* Title + Status Dot */
+.issue-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.status-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.status-dot.open {
+  background: #238636; /* GitHub green */
+}
+
+.status-dot.closed {
+  background: #f85149; /* GitHub red */
+}
+
+/* Title */
+.issue-title {
+  font-size: 18px;
+  margin: 0;
+}
+
+/* Description */
+.issue-desc {
+  font-size: 14px;
+  margin: 10px 0 15px 0;
+  color: #9ba3af;
+}
+
+/* Status Tag */
+.issue-status {
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 20px;
+  border: 1px solid;
+}
+
+.issue-status.open {
+  border-color: #238636;
+  color: #238636;
+}
+
+.issue-status.closed {
+  border-color: #f85149;
+  color: #f85149;
+}

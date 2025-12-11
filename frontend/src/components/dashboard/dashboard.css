@@ -1,0 +1,115 @@
+/* Entire page background */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #0d1117; /* GitHub dark */
+  font-family: "Inter", sans-serif;
+  color: #c9d1d9;
+}
+
+/* DASHBOARD WRAPPER */
+#dashboard {
+  display: flex;
+  justify-content: center;
+  gap: 80px;
+  padding: 40px 0;
+
+  /* Center the whole dashboard & limit width */
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* SIDEBARS */
+.sidebar {
+  width: 260px;
+  background: #161b22;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #30363d;
+  height: fit-content;
+}
+
+.sidebar h3 {
+  margin-top: 0;
+  font-size: 18px;
+  color: #f0f6fc;
+  border-bottom: 1px solid #30363d;
+  padding-bottom: 8px;
+}
+
+/* MAIN SECTION */
+.main {
+  flex: 1;
+  background: #161b22;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #30363d;
+}
+
+.main h2 {
+  margin-top: 0;
+  font-size: 22px;
+  color: #f0f6fc;
+}
+
+/* SEARCH BAR */
+.search-box {
+  margin: 20px 0;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 1px solid #30363d;
+  background: #0d1117;
+  color: #c9d1d9;
+  outline: none;
+}
+
+.search-box input:focus {
+  border-color: #58a6ff;
+}
+
+/* REPO LIST ITEMS (CARDS) */
+.repo-card {
+  padding: 14px;
+  margin-bottom: 16px;
+  border-radius: 6px;
+  background: #0d1117;
+  border: 1px solid #30363d;
+  transition: background 0.15s ease;
+}
+
+.repo-card:hover {
+  background: #161b22;
+}
+
+.repo-card h4 {
+  margin: 0;
+  font-size: 17px;
+  color: #58a6ff;
+}
+
+.repo-card p {
+  margin-top: 4px;
+  font-size: 14px;
+  color: #8b949e;
+}
+
+/* EVENTS LIST */
+.event-list {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 12px;
+}
+
+.event-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid #30363d;
+  color: #c9d1d9;
+}
+
+.event-list li:last-child {
+  border-bottom: none;
+}
