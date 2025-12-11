@@ -43,7 +43,7 @@ const Profile = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
     setCurrentUser(null);
-    navigate("/auth");
+    navigate("/login");
   };
 
   return (

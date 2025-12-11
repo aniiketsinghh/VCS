@@ -10,7 +10,7 @@
 
 /* Page title */
 #all-repos-container h1 {
-  margin: 0 0 25px 0;
+  margin: full;
   font-size: 28px;
   color: #f0f6fc;
 }
@@ -21,6 +21,7 @@
   flex-direction: column;
   gap: 18px;
   width: 100%;
+  margin-top: 30px;
 }
 
 /* Repo card */

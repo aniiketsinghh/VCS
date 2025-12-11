@@ -1,6 +1,7 @@
 /* Entire page background */
 body {
   margin: 0;
+
   padding: 0;
   background-color: #0d1117; /* GitHub dark */
   font-family: "Inter", sans-serif;
@@ -26,7 +27,7 @@ body {
   padding: 20px;
   border-radius: 8px;
   border: 1px solid #30363d;
-  height: fit-content;
+  height: 250px;
 }
 
 .sidebar h3 {

@@ -10,8 +10,17 @@ import {
   Github
 } from "lucide-react";
 import "./Navbar.css";
-
+import { useAuth } from "../authContext";
+import { useNavigate } from "react-router";
 const Navbar = () => {
+  const { currentUser, setCurrentUser} = useAuth();
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+    setCurrentUser(null);
+    navigate("/login");
+  };
   return (
     <nav className="navbar">
       
@@ -43,16 +52,19 @@ const Navbar = () => {
           <User size={18} />
           <span>Profile</span>
         </Link>
-
+        {!currentUser && (<>
         <Link className="nav-item" to="/login">
           <LogIn size={18} />
           <span>Login</span>
         </Link>
+        </>)}
+         {currentUser && (<>
 
-        <button className="nav-item btn-logout">
+        <button className="nav-item btn-logout" onClick={handleLogout}>
           <LogOut size={18} />
           <span>Logout</span>
         </button>
+        </>)}
 
       </div>
     </nav>

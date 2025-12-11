@@ -21,6 +21,8 @@
   gap: 12px;
   text-decoration: none;
   color: white;
+  margin-right: 900px;
+  margin-left: 20px;
 }
 
 .nav-logo h2 {
@@ -52,6 +54,7 @@
   color: #c9d1d9;
   font-size: 15px;
   transition: 0.18s ease;
+  cursor: pointer;
 }
 
 .nav-item:hover {
