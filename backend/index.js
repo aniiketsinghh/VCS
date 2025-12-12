@@ -3,18 +3,17 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const http = require("http");
-const { Server } = require("socket.io");
-const mainRouter = require("./routes/main.router");
+const mainRouter = require("./routes/main.router.js");
 
 const yargs = require("yargs");
 const { hideBin } = require("yargs/helpers");
 
-const { initRepo } = require("./controllers/init");
-const { addRepo } = require("./controllers/add");
-const { commitRepo } = require("./controllers/commit");
-const { pushRepo } = require("./controllers/push");
-const { pullRepo } = require("./controllers/pull");
-const { revertRepo } = require("./controllers/revert");
+const { initRepo } = require("./controllers/init.js");
+const { addRepo } = require("./controllers/add.js");
+const { commitRepo } = require("./controllers/commit.js");
+const { pushRepo } = require("./controllers/push.js");
+const { pullRepo } = require("./controllers/pull.js");
+const { revertRepo } = require("./controllers/revert.js");
 
 dotenv.config();
 
@@ -85,22 +84,7 @@ function startServer() {
 
   let user = "test";
   const httpServer = http.createServer(app);
-  const io = new Server(httpServer, {
-    cors: {
-      origin: "*",
-      methods: ["GET", "POST"],
-    },
-  });
 
-  io.on("connection", (socket) => {
-    socket.on("joinRoom", (userID) => {
-      user = userID;
-      console.log("=====");
-      console.log(user);
-      console.log("=====");
-      socket.join(userID);
-    });
-  });
 
   const db = mongoose.connection;
 

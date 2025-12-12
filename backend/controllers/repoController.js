@@ -3,6 +3,8 @@ const Repository = require("../models/repoModel");
 const User = require("../models/userModel");
 const Issue = require("../models/issueModel");
 
+// ------------------------- CREATE REPOSITORY -------------------------
+
 async function createRepository(req, res) {
   const { owner, name, issues, content, description, visibility } = req.body;
 
@@ -15,13 +17,18 @@ async function createRepository(req, res) {
       return res.status(400).json({ error: "Invalid User ID!" });
     }
 
+    const userExists = await User.findById(owner);
+    if (!userExists) {
+      return res.status(404).json({ error: "Owner user not found!" });
+    }
+
     const newRepository = new Repository({
       name,
-      description,
-      visibility,
+      description: description || "",
+      visibility: visibility ?? true,
       owner,
-      content,
-      issues,
+      content: content || [],
+      issues: issues || [],
     });
 
     const result = await newRepository.save();
@@ -31,69 +38,99 @@ async function createRepository(req, res) {
       repositoryID: result._id,
     });
   } catch (err) {
-    console.error("Error during repository creation : ", err.message);
-    res.status(500).send("Server error");
+    console.error("Error during repository creation:", err);
+    res.status(500).json({ error: "Server error" });
   }
 }
+
+// ------------------------- GET ALL REPOSITORIES -------------------------
 
 async function getAllRepositories(req, res) {
   try {
     const repositories = await Repository.find({})
-      .populate("owner")
+      .populate("owner", "-password") // hide password
       .populate("issues");
 
     res.json(repositories);
   } catch (err) {
-    console.error("Error during fetching repositories : ", err.message);
-    res.status(500).send("Server error");
+    console.error("Error during fetching repositories:", err);
+    res.status(500).json({ error: "Server error" });
   }
 }
+
+// ------------------------- FETCH BY ID -------------------------
 
 async function fetchRepositoryById(req, res) {
   const { id } = req.params;
+
   try {
-    const repository = await Repository.find({ _id: id })
-      .populate("owner")
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "Invalid Repository ID!" });
+    }
+
+    const repository = await Repository.findById(id)
+      .populate("owner", "-password")
       .populate("issues");
+
+    if (!repository) {
+      return res.status(404).json({ error: "Repository not found!" });
+    }
 
     res.json(repository);
   } catch (err) {
-    console.error("Error during fetching repository : ", err.message);
-    res.status(500).send("Server error");
+    console.error("Error during fetching repository:", err);
+    res.status(500).json({ error: "Server error" });
   }
 }
+
+// ------------------------- FETCH BY NAME -------------------------
 
 async function fetchRepositoryByName(req, res) {
   const { name } = req.params;
+
   try {
     const repository = await Repository.find({ name })
-      .populate("owner")
+      .populate("owner", "-password")
       .populate("issues");
+
+    if (!repository || repository.length === 0) {
+      return res.status(404).json({ error: "Repository not found!" });
+    }
 
     res.json(repository);
   } catch (err) {
-    console.error("Error during fetching repository : ", err.message);
-    res.status(500).send("Server error");
+    console.error("Error during fetching repository:", err);
+    res.status(500).json({ error: "Server error" });
   }
 }
 
+// ------------------------- FETCH USER REPOSITORIES -------------------------
+
 async function fetchRepositoriesForCurrentUser(req, res) {
-  console.log(req.params);
   const { userID } = req.params;
 
   try {
+    if (!mongoose.Types.ObjectId.isValid(userID)) {
+      return res.status(400).json({ error: "Invalid User ID!" });
+    }
+
     const repositories = await Repository.find({ owner: userID });
 
-    if (!repositories || repositories.length == 0) {
+    if (!repositories || repositories.length === 0) {
       return res.status(404).json({ error: "User Repositories not found!" });
     }
-    console.log(repositories);
-    res.json({ message: "Repositories found!", repositories });
+
+    res.json({
+      message: "Repositories found!",
+      repositories,
+    });
   } catch (err) {
-    console.error("Error during fetching user repositories : ", err.message);
-    res.status(500).send("Server error");
+    console.error("Error during fetching user repositories:", err);
+    res.status(500).json({ error: "Server error" });
   }
 }
+
+// ------------------------- UPDATE REPOSITORY -------------------------
 
 async function updateRepositoryById(req, res) {
   const { id } = req.params;
@@ -101,12 +138,13 @@ async function updateRepositoryById(req, res) {
 
   try {
     const repository = await Repository.findById(id);
+
     if (!repository) {
       return res.status(404).json({ error: "Repository not found!" });
     }
 
-    repository.content.push(content);
-    repository.description = description;
+    if (content) repository.content.push(content);
+    if (description) repository.description = description;
 
     const updatedRepository = await repository.save();
 
@@ -115,16 +153,19 @@ async function updateRepositoryById(req, res) {
       repository: updatedRepository,
     });
   } catch (err) {
-    console.error("Error during updating repository : ", err.message);
-    res.status(500).send("Server error");
+    console.error("Error during updating repository:", err);
+    res.status(500).json({ error: "Server error" });
   }
 }
+
+// ------------------------- TOGGLE VISIBILITY -------------------------
 
 async function toggleVisibilityById(req, res) {
   const { id } = req.params;
 
   try {
     const repository = await Repository.findById(id);
+
     if (!repository) {
       return res.status(404).json({ error: "Repository not found!" });
     }
@@ -138,23 +179,27 @@ async function toggleVisibilityById(req, res) {
       repository: updatedRepository,
     });
   } catch (err) {
-    console.error("Error during toggling visibility : ", err.message);
-    res.status(500).send("Server error");
+    console.error("Error during toggling visibility:", err);
+    res.status(500).json({ error: "Server error" });
   }
 }
 
+// ------------------------- DELETE REPOSITORY -------------------------
+
 async function deleteRepositoryById(req, res) {
   const { id } = req.params;
+
   try {
     const repository = await Repository.findByIdAndDelete(id);
+
     if (!repository) {
       return res.status(404).json({ error: "Repository not found!" });
     }
 
     res.json({ message: "Repository deleted successfully!" });
   } catch (err) {
-    console.error("Error during deleting repository : ", err.message);
-    res.status(500).send("Server error");
+    console.error("Error during deleting repository:", err);
+    res.status(500).json({ error: "Server error" });
   }
 }
 

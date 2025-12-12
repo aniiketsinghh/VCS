@@ -4,7 +4,6 @@ const dotenv = require("dotenv");
 const User = require("../models/userModel");
 
 dotenv.config();
-const uri = process.env.MONGODB_URI;
 
 
 
@@ -97,15 +96,11 @@ async function getAllUsers(req, res) {
 }
 
 async function getUserProfile(req, res) {
-  const currentID = req.params.id;
+  const currentID = req.user.id;
 
   try {
-    await connectClient();
-    const db = client.db("githubclone");
-    const usersCollection = db.collection("users");
-
-    const user = await usersCollection.findOne({
-      _id: new ObjectId(currentID),
+    const user = await User.findOne({
+      _id: currentID,
     });
 
     if (!user) {

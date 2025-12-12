@@ -1,7 +1,10 @@
-import jwt from "jsonwebtoken";
-import User from "../models/userModel.js";
+const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+dotenv.config();
+const User = require("../models/userModel");
 
-export const authMiddleware = async (req, res, next) => {
+// Correct way: define function FIRST
+const authMiddleware = async (req, res, next) => {
   try {
     let token = req.header("Authorization");
 
@@ -9,7 +12,6 @@ export const authMiddleware = async (req, res, next) => {
       return res.status(401).json({ message: "No token, authorization denied" });
     }
 
-    // Remove "Bearer " if present
     if (token.startsWith("Bearer ")) {
       token = token.replace("Bearer ", "");
     }
@@ -34,3 +36,6 @@ export const authMiddleware = async (req, res, next) => {
     return res.status(401).json({ message: "Invalid token" });
   }
 };
+
+// CORRECT export
+module.exports = authMiddleware;
