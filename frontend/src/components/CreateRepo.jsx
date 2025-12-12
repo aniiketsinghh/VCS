@@ -5,10 +5,42 @@ import { useNavigate } from "react-router";
 import "./CreateRepo.css";
 import Navbar from "./Navbar";
 
+
 const CreateRepo = () => {
   const navigate = useNavigate();
 
   const [username, setUsername] = useState("loading...");
+  const [repos, setRepos] = useState({
+    name: "",
+    description: "",
+    visibility: "Public",
+    addReadme: false,
+    addGitignore: false,
+    addLicense: false,
+  });
+
+
+   useEffect(() => {
+  
+      const fetchRepositories = async () => {
+        try {
+          const response = await fetch(
+            `http://localhost:3002/api/repo/create`,{
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            }
+          );
+          const data = await response.json();
+          setRepos(data.repositories);
+        } catch (err) {
+          console.error("Error while fecthing repositories: ", err);
+        }
+      };
+  
+      fetchRepositories();
+    }, []);
+  
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("user"));
@@ -19,14 +51,7 @@ const CreateRepo = () => {
     }
   }, []);
 
-  const [repos, setRepos] = useState({
-    name: "",
-    description: "",
-    visibility: "Public",
-    addReadme: false,
-    addGitignore: false,
-    addLicense: false,
-  });
+ 
 
   const handleCreate = async () => {
     if (!repos.name.trim()) {
