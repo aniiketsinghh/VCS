@@ -17,20 +17,20 @@ const ProjectRoutes = ()=>{
     const navigate = useNavigate();
 
     useEffect(()=>{
-        // const userIdFromStorage = localStorage.getItem("userId");
+        const userIdFromStorage = localStorage.getItem("userId");
 
-        // if(userIdFromStorage && !currentUser){
-        //     setCurrentUser(userIdFromStorage);
-        // }
+        if(userIdFromStorage && !currentUser){
+            setCurrentUser(userIdFromStorage);
+        }
 
-        // if(!userIdFromStorage && !["/auth", "/signup"].includes(window.location.pathname))
-        // {
-        //     navigate("/login");
-        // }
+        if(!userIdFromStorage && !["/auth", "/signup"].includes(window.location.pathname))
+        {
+            navigate("/login");
+        }
 
-        // if(userIdFromStorage && window.location.pathname=='/auth'){
-        //     navigate("/");
-        // }
+        if(userIdFromStorage && window.location.pathname=='/auth'){
+            navigate("/");
+        }
     }, [currentUser, navigate, setCurrentUser]);
 
     let element = useRoutes([
