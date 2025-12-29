@@ -9,19 +9,27 @@ const Dashboard = () => {
   const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
-    const userId = localStorage.getItem("userId");
 
-    const fetchRepositories = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:3002/api/repo/${userId}`
-        );
-        const data = await response.json();
-        setRepositories(data.repositories);
-      } catch (err) {
-        console.error("Error while fecthing repositories: ", err);
-      }
-    };
+    // const fetchRepositories = async () => {
+    //   const userId = localStorage.getItem("userId");
+    //   if (!userId) {
+    //     return;
+    //   }
+    //   try {
+    //     const response = await fetch(
+    //       `http://localhost:3002/api/repo/${userId}`, {
+    //       method: "GET",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       }
+    //       }
+    //     );
+    //     const data = await response.json();
+    //     setRepositories(data.repositories);
+    //   } catch (err) {
+    //     console.error("Error while fecthing repositories: ", err);
+    //   }
+    // };
 
     const fetchSuggestedRepositories = async () => {
       try {
@@ -34,7 +42,7 @@ const Dashboard = () => {
       }
     };
 
-    fetchRepositories();
+    // fetchRepositories();
     fetchSuggestedRepositories();
   }, []);
 
